@@ -1,0 +1,85 @@
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #c3cef5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+header {
+    background: #1e3799;
+    color: white;
+    text-align: center;
+    padding: 1.5em 0;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+}
+
+main {
+    margin: 1em 33%;
+    background: white;
+    padding: 1.5em;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+#index {
+    text-align: center;
+}
+#index .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#index .buttons a {
+    background: #1e3799;
+    color: white;
+    text-decoration: none;
+    padding: 0.75em 1em;
+    margin: 0 0.5em;
+    border-radius: 16px;
+    line-height: 0.85em;
+    transition: background 0.125s ease-out;
+}
+#index .buttons a:hover {
+    background: #4c67d4;
+}
+
+.columns {
+    display: flex;
+    flex-direction: row;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0;
+    margin: 0.5em;
+}
+
+h2 {
+    text-align: center;
+}
+label {
+    margin: 0.25em 0;
+}
+input {
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.25em;
+}
