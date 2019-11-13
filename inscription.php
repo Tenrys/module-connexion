@@ -20,7 +20,6 @@
 
             if (count($results) < 1) {
                 $request = "INSERT INTO utilisateurs (login, password, prenom, nom) VALUES (?, ?, ?, ?);";
-
                 try {
                     $stmt = $db->prepare($request);
                     $stmt->bind_param("ssss", $login, $password, $prenom, $nom);
@@ -62,7 +61,7 @@
             }
             if (isset($success) && $success) {
                 echo "<h4 style='color: green; font-weight: bold;'>Compte créé avec succès ! Vous pouvez dorénavant vous connecter...<br>Vous allez être redirigé dans 5 secondes...</h4>";
-                header("Refresh: 5; URL=/");
+                header("Refresh: 5; URL=/connexion.php");
             } else { ?>
                 <form method="post">
                     <div class="columns">
@@ -75,12 +74,12 @@
                     <div class="columns">
                         <div class="column">
                             <label for="password">Mot de passe</label>
-                            <input type="password" name="password" required minlength="3" maxlength="255" value="<?= $password ?? '' ?>">
+                            <input type="password" name="password" required minlength="3" maxlength="255">
                         </div>
 
                         <div class="column">
                             <label for="passwordConfirm">Mot de passe (confirmation)</label>
-                            <input type="password" name="passwordConfirm" required minlength="3" maxlength="255" value="<?= $passwordConfirm ?? '' ?>">
+                            <input type="password" name="passwordConfirm" required minlength="3" maxlength="255">
                         </div>
                     </div>
 
