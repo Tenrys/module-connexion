@@ -9,23 +9,40 @@
     extract($_SESSION["user"]);
 
     if (count($_POST) > 0) {
-        extract($_POST);
+        $newInfo = &$_POST;
 
-        $db = new mysqli("localhost", "root", "", "moduleconnexion");
-
-        try {
-            $request = "UPDATE utilisateurs SET prenom = ?, nom = ? WHERE login = ?;";
-            $stmt = $db->prepare($request);
-            $stmt->bind_param("sss", $prenom, $nom, $login);
-            $success = $stmt->execute();
-
-            if ($success) {
-                $_SESSION["user"]["prenom"] = $prenom;
-                $_SESSION["user"]["nom"] = $nom;
+        if (isset($newInfo["password"]) && $newInfo["password"] != "") {
+            if ($newInfo["password"] != $newInfo["passwordConfirm"]) {
+                $error = "Le mot de passe que vous avez fourni ne correspond pas avec votre confirmation !";
             }
-        } catch (Exception $e) {
-            echo "Exception reçue: {$e->getMessage()}";
-            die;
+        } else {
+            $newInfo["password"] = $password;
+        }
+
+        if (!isset($error)) {
+            $db = new mysqli("localhost", "root", "", "moduleconnexion");
+
+            try {
+                $request = "UPDATE utilisateurs SET login = ?, password = ?, prenom = ?, nom = ? WHERE login = ?;";
+                $stmt = $db->prepare($request);
+                $stmt->bind_param("sssss", $newInfo["login"], $newInfo["password"], $newInfo["prenom"], $newInfo["nom"], $login);
+                $success = $stmt->execute();
+
+                if ($success) {
+                    $request = "SELECT * FROM utilisateurs WHERE login = ?;";
+                    $stmt = $db->prepare($request);
+                    $stmt->bind_param("s", $newInfo["login"]);
+                    $stmt->execute();
+                    $results = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+                    // Mise à jour de la session
+                    $_SESSION["user"] = $results[0];
+                    extract($_SESSION["user"]);
+                }
+            } catch (Exception $e) {
+                echo "Exception reçue: {$e->getMessage()}";
+                die;
+            }
         }
     }
 ?>
@@ -57,6 +74,25 @@
             }
             ?>
             <form method="post">
+                <div class="columns">
+                    <div class="column">
+                        <label for="login">Login</label>
+                        <input type="text" name="login" required minlength="3" maxlength="255" value="<?= $login ?? '' ?>">
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" name="password" placeholder="Optionnel" minlength="3" maxlength="255">
+                    </div>
+
+                    <div class="column">
+                        <label for="passwordConfirm">Mot de passe (confirmation)</label>
+                        <input type="password" name="passwordConfirm" placeholder="Optionnel" minlength="3" maxlength="255">
+                    </div>
+                </div>
+
                 <div class="columns">
                     <div class="column">
                         <label for="prenom">Prénom</label>
