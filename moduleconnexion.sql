@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 13, 2019 at 12:30 PM
+-- Generation Time: Nov 13, 2019 at 01:43 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
 
 INSERT INTO `utilisateurs` (`id`, `login`, `prenom`, `nom`, `password`) VALUES
 (1, 'admin', 'admin', 'admin', 'admin'),
-(5, 'asd', 'asd2', 'asd2', 'asd'),
+(5, 'testuser3', 'Test', 'User', 'motdepasse'),
 (3, 'testuser', 'Marceau2', 'Maubert', 'testuser'),
 (4, 'testuser2', 'testprenom', 'testnom', 'testuser');
 COMMIT;
